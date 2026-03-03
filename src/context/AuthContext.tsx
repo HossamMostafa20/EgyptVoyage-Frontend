@@ -11,12 +11,19 @@ import { getToken, setToken as saveToken, clearToken } from "@/lib/authToken";
 
 /* ---------- Type Definition ---------- */
 
+type User = {
+    sub: string;
+    email: string;
+    name: string;
+};
+
 type AuthContextType = {
     isLoggedIn: boolean;
     loading: boolean;
     login: (token: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    user: User | null; // 👈 جديد
 };
 
 /* ---------- Create Context ---------- */
@@ -34,9 +41,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [loading, setLoading] = useState<boolean>(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
         const token = getToken();
+
+        if (token) {
+            const payload = token.split(".")[1];
+            const decoded = JSON.parse(atob(payload));
+            setUser(decoded);
+        }
+
         setIsLoggedIn(!!token);
         setIsAuthenticated(!!token);
         setLoading(false);
@@ -44,18 +59,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const login = (token: string): void => {
         saveToken(token);
+
+        const payload = token.split(".")[1];
+        const decoded = JSON.parse(atob(payload));
+        setUser(decoded);
+
         setIsLoggedIn(true);
-        setIsAuthenticated(!!token);
+        setIsAuthenticated(true);
     };
 
     const logout = (): void => {
         clearToken();
         setIsLoggedIn(false);
         setIsAuthenticated(false);
+        setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, isLoggedIn, login, logout, loading }}>
+        <AuthContext.Provider value={{ isAuthenticated, isLoggedIn, login, logout, loading, user }}>
             {children}
         </AuthContext.Provider>
     );

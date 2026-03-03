@@ -41,7 +41,7 @@ export default function ProgramsClient({ programs }: { programs: ProgramI[] }) {
                                             <Clock className="size-4 mt-0.5" />
                                             {program.duration}
                                         </span>
-                                        <span className="font-bold mt-2 text-yellow-500">{program.price} EGP</span>
+                                        <span className="font-bold mt-2 text-yellow-500">{program.price} $</span>
                                     </div>
                                 </CardHeader>
                             </Link>
