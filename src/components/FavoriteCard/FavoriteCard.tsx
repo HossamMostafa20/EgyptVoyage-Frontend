@@ -16,10 +16,11 @@ interface Props {
     description?: string;
     image: string;
     rating?: number;
+    showFavoriteButton?: boolean;
 }
 
 
-export default function FavoriteCard({ id, entityType, title, city, description, image, rating, }: Props) {
+export default function FavoriteCard({ id, entityType, title, city, description, image, rating, showFavoriteButton = true }: Props) {
 
     const { toggleFavorite, isFavorite, loading } = useFavorites();
     const isFav = isFavorite(id, entityType);
@@ -62,10 +63,11 @@ export default function FavoriteCard({ id, entityType, title, city, description,
                     )} */}
                     </CardHeader>
 
-                    <Button className="cursor-pointer mt-2.5 mx-7 mb-5 bg-linear-to-b from-[#D3A15C] to-[#00000055] text-white transition-all duration-300" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(id, entityType); }} disabled={loading}>
-                        <HeartIcon className={`size-5 me-2 transition-all duration-300 ${isFav && "fill-white scale-110"}`} />
-                        {isFav && "Remove From Favourite"}
-                    </Button>
+                    {showFavoriteButton &&
+                        <Button className="cursor-pointer mt-2.5 mx-7 mb-5 bg-linear-to-b from-[#D3A15C] to-[#00000055] text-white transition-all duration-300" onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(id, entityType); }} disabled={loading}>
+                            <HeartIcon className={`size-5 me-2 transition-all duration-300 ${isFav && "fill-white scale-110"}`} />
+                            {isFav && "Remove From Favourite"}
+                        </Button>}
                 </Card>
             </Link>
         </div>

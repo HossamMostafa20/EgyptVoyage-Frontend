@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Heart } from "lucide-react";
+import { Heart, Share2 } from "lucide-react";
 import FavoritesTabs from "@/components/FavoritesTabs/FavoritesTabs";
 import FavoritesGrid from "@/components/FavoritesGrid/FavoritesGrid";
 import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
-import { getMyFavorites } from "@/services/favorite.service";
+import { getMyFavorites, shareFavorites } from "@/services/favorite.service";
 import { FavoriteResponse } from "@/interfaces";
 import Loading from "@/app/loading";
 import { useFavorites } from "@/context/FavoriteContext";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 type TabValue = "all" | "hotels" | "landmarks" | "restaurants" | "programs";
 
@@ -46,6 +48,28 @@ export default function FavoritesPage() {
 
     fetchFavorites();
   }, []);
+
+
+  const handleShare = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const result = await shareFavorites(token);
+      console.log(result.shareLink);
+
+      const shareToken = result?.shareLink?.split("/").pop()
+
+      const frontendLink = `http://localhost:3000/shared/${shareToken}`
+
+      navigator.clipboard.writeText(frontendLink)
+
+      toast.success("Share link copied!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to share favorites");
+    }
+  };
 
 
   const content = useMemo(() => {
@@ -208,9 +232,17 @@ export default function FavoritesPage() {
     return <p className="text-center p-6">No favorites found</p>;
 
   return <>
-    <h1 className="text-3xl font-bold text-[#0D3B66] flex items-center justify-center gap-2 p-3">
-      My Favorites <Heart className="size-8 text-[#0D3B66] fill-current" />
-    </h1>
+    <div className="flex items-center justify-center p-3">
+      <h1 className="text-3xl font-bold text-[#0D3B66] flex items-center gap-2">
+        My Favorites
+        <Heart className="size-8 text-[#0D3B66] fill-current" />
+      </h1>
+
+      <Button onClick={handleShare} className="absolute right-3 bg-[#0D3B66] text-white flex items-center gap-2 cursor-pointer">
+        <Share2 className="size-4" />
+        Share
+      </Button>
+    </div>
 
     {/* Tabs */}
     <div className="flex justify-center mb-5">

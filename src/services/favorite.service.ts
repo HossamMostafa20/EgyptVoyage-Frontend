@@ -62,3 +62,22 @@ export const removeFromFavorites = async (token: string, entityId: string, entit
 
     return response;
 };
+
+
+//           SHARE
+export const shareFavorites = async (token: string) => {
+    const res = await fetch(`${BASE_URL}/favoritelists/my/share`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+    }
+    );
+
+    if (!res.ok) {
+        throw new Error("Failed to generate share link");
+    }
+
+    return res.json();
+};
