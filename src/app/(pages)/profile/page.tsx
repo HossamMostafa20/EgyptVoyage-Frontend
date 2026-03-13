@@ -3,9 +3,31 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ProtectedRoute from "@/components/Protected/ProtectedRoute";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
 import React from "react";
 
+
+type TokenPayload = {
+    name: string;
+    email: string;
+};
+
 export default function Profile() {
+
+    //               علشان اسم اليوزر يظهر
+    const [user, setUser] = useState<TokenPayload | null>(null);
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            const decoded = jwtDecode<TokenPayload>(token);
+            setUser(decoded);
+        }
+    }, []);
+
+
+    //            علشان شكل Button كل page
     const pathname = usePathname();
     const baseBtn = `px-5 sm:px-6 py-2.5 sm:py-3 mb-2 sm:mb-0 rounded-xl sm:rounded-t-2xl sm:rounded-b-none font-semibold text-sm sm:text-base cursor-pointer`;
     const activeBtn = "bg-[#E1864F] text-white";
@@ -15,7 +37,7 @@ export default function Profile() {
         <ProtectedRoute>
             {/* Title */}
             <h1 className="text-2xl sm:text-3xl lg:text-4xl text-center font-medium text-[#0D3B66] p-6 sm:p-9">
-                Hi , Esraa
+                Hi , {user?.name}
             </h1>
 
             <div className="flex flex-col items-center justify-center px-4">
@@ -49,13 +71,13 @@ export default function Profile() {
                             <p>
                                 <span className="text-[#0D3B66] font-bold">Name</span>
                                 <span className="text-[#0D3B66] font-bold mx-2">:</span>
-                                Esraa Ramadan
+                                {user?.name}
                             </p>
 
                             <p>
                                 <span className="text-[#0D3B66] font-bold">Email</span>
                                 <span className="text-[#0D3B66] font-bold mx-2">:</span>
-                                esraaramadan11@gmail.com
+                                {user?.email}
                             </p>
 
                             {/* <p>

@@ -44,4 +44,27 @@ export async function resetPassword(token: string, newPassword: string, confirmN
     }
 
     return data
-}
+};
+
+
+//           updatePassword
+export const updatePassword = async (currentPassword: string, newPassword: string, confirmNewPassword: string) => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://egyptvoyage.runasp.net/api/Auth/update-password", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ currentPassword, newPassword, confirmNewPassword, }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.message || "Failed to update password");
+    }
+
+    return data;
+};
