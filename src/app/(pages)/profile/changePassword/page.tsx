@@ -83,9 +83,11 @@ export default function ChangePassword() {
                             <Button className="px-12 py-6 rounded-full text-lg font-semibold bg-linear-to-b from-[#135491] to-[#001d35] cursor-pointer">
                                 Update Password
                             </Button>
-                            <Button className="px-12 py-6 rounded-full text-lg font-semibold bg-linear-to-b from-[#D3A15C] to-[#00000094] cursor-pointer">
-                                Forget Password
-                            </Button>
+                            <Link href={'../forget-password'}>
+                                <Button className="px-12 py-6 rounded-full text-lg font-semibold bg-linear-to-b from-[#D3A15C] to-[#00000094] cursor-pointer">
+                                    Forget Password
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -59,7 +59,7 @@ export default function LoginForm() {
         }
     }
 
-    return (
+    return <>
         <div className='p-0 sm:p-5'>
             <form onSubmit={handleSubmit(Login)} className="p-5 sm:p-8 rounded-[40px] shadow-[0_25px_60px_rgba(0,0,0,0.45)] bg-linear-to-b from-[#e7cfa6] to-[#d29b52] border-0">
 
@@ -70,12 +70,7 @@ export default function LoginForm() {
                 {/* Email */}
                 <div className="space-y-1 mb-5">
                     <Label className="text-lg ms-1">Email</Label>
-                    <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        {...register('email')}
-                        className="w-80 h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)]"
-                    />
+                    <Input type="email" placeholder="Enter your email" {...register('email')} className="w-80 h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)]" />
                     {errors.email && touchedFields.email && (
                         <p className="text-red-500 text-sm mt-1 ms-9">
                             {errors.email?.message}
@@ -88,18 +83,9 @@ export default function LoginForm() {
                     <Label className="text-lg ms-1">Password</Label>
 
                     <div className="relative w-80">
-                        <Input
-                            type={showPassword ? "text" : "password"}
-                            placeholder="Enter your password"
-                            {...register("password")}
-                            className="h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] pr-10"
-                        />
+                        <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" {...register("password")} className="h-11 rounded-full bg-[#e6cda6] border-0 shadow-[0_6px_12px_rgba(0,0,0,0.35)] pr-10" />
 
-                        <Button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-transparent"
-                        >
+                        <Button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-transparent text-[#0D3B66]">
                             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </Button>
                     </div>
@@ -112,16 +98,12 @@ export default function LoginForm() {
                 </div>
 
                 <div className="flex justify-end mb-4 text-sm">
-                    <Link href={'#'} className="text-[#123a63] hover:underline">
+                    <Link href={'./forget-password'} className="text-[#123a63] hover:underline">
                         forget password?
                     </Link>
                 </div>
 
-                <Button
-                    disabled={loading}
-                    type="submit"
-                    className="w-full h-12 rounded-2xl text-2xl font-semibold bg-linear-to-b from-[#184e77] to-[#021d33] cursor-pointer"
-                >
+                <Button disabled={loading} type="submit" className="w-full h-12 rounded-2xl text-2xl font-semibold bg-linear-to-b from-[#184e77] to-[#021d33] cursor-pointer">
                     {loading ? <Loader2 className="animate-spin" /> : "Login"}
                 </Button>
 
@@ -139,5 +121,5 @@ export default function LoginForm() {
                 </p>
             </form>
         </div>
-    )
+    </>
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode,} from "react";
+import { createContext, useContext, useEffect, useState, ReactNode, } from "react";
 import { getToken, setToken as saveToken, clearToken } from "@/lib/authToken";
 
 /* Type Definition */
