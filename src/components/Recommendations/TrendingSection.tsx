@@ -12,7 +12,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Flame, Loader2, TrendingUp } from "lucide-react";
+import { Flame, Loader2, MapPin, TrendingUp } from "lucide-react";
 
 export interface TrendingItem {
     id: string;
@@ -99,13 +99,13 @@ export default function TrendingSection({ allItems, limit = 8 }: Props) {
                     <Flame className="w-4 h-4 text-orange-500" />
                 </div>
                 <h2 className="text-2xl font-bold text-[#0D3B66]">Trending Now</h2>
-                <span className="text-[10px] font-bold tracking-widest uppercase bg-orange-500 text-white px-2.5 py-1 rounded-full">
+                {/* <span className="text-[10px] font-bold tracking-widest uppercase bg-orange-500 text-white px-2.5 py-1 rounded-full">
                     Hot this week
-                </span>
-                <span className="text-xs text-gray-400 flex items-center gap-1">
+                </span> */}
+                {/* <span className="text-xs text-gray-400 flex items-center gap-1">
                     <TrendingUp className="w-3 h-3" />
                     Based on all users' activity
-                </span>
+                </span> */}
             </div>
 
             {/* ── Grid ── */}
@@ -156,13 +156,16 @@ export default function TrendingSection({ allItems, limit = 8 }: Props) {
                             </div>
 
                             {/* Info */}
-                            <div className="px-3 py-2.5">
+                            <div className="px-3 py-2.5 bg-[#F5E6C8]">
                                 <p className="font-semibold text-[#0D3B66] truncate text-sm">{item.name}</p>
-                                {(item.city || item.country) && (
-                                    <p className="text-xs text-gray-400 truncate mt-0.5">
-                                        {item.city || item.country}
-                                    </p>
-                                )}
+                                <div className="flex items-center gap-1 mt-0.5">
+                                    {(item.city || item.country) && (
+                                        <>
+                                            <MapPin className="w-3 h-3 text-gray-700 shrink-0" />
+                                            <p className="text-xs text-gray-700 truncate mt-0.5">{item.city || item.country}</p>
+                                        </>
+                                    )}
+                                </div>
                             </div>
                         </Link>
                     );

@@ -117,7 +117,7 @@
 //             </div>
 //         </section>
 //     </>
-        
+
 // }
 
 
@@ -377,12 +377,13 @@ export default function RecommendedSection({
         <section className="py-10 px-4">
             {/* ── Header ── */}
             <div className="container mx-auto mb-6 flex items-center gap-3 flex-wrap">
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#D3A15C]/20">
+                {/* <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#D3A15C]/20">
                     <Sparkles className="w-4 h-4 text-[#D3A15C]" />
-                </div>
-                <h2 className="text-2xl font-bold text-[#0D3B66]">{title}</h2>
+                </div> */}
+                <h2 className="bg-[#0D3B66] p-2.5 rounded-xl text-white">{title}</h2>
+                {/* <h2 className="text-2xl font-bold text-[#0D3B66]">{title}</h2> */}
                 {isPersonalized && (
-                    <span className="text-[10px] font-bold tracking-widest uppercase bg-[#0D3B66] text-white px-2.5 py-1 rounded-full">
+                    <span className="bg-[#0f4d86] p-1.5 rounded-xl text-white">
                         Personalised for you
                     </span>
                 )}
@@ -433,21 +434,21 @@ export default function RecommendedSection({
                             </div>
 
                             {/* Info */}
-                            <div className="px-3 py-2.5">
+                            <div className="px-3 py-2.5 bg-[#F5E6C8]">
                                 <p className="font-semibold text-[#0D3B66] truncate text-sm">{item.name}</p>
                                 <div className="flex items-center gap-1 mt-0.5">
-                                    {item.city && (
+                                    {item.city || item.country && (
                                         <>
-                                            <MapPin className="w-3 h-3 text-gray-400 shrink-0" />
-                                            <p className="text-xs text-gray-400 truncate">{item.city || item.country}</p>
+                                            <MapPin className="w-3 h-3 text-gray-700 shrink-0" />
+                                            <p className="text-xs text-gray-700 truncate">{item.city || item.country}</p>
                                         </>
                                     )}
                                     {/* City match label */}
-                                    {item.cityMatch && isPersonalized && (
+                                    {/* {item.cityMatch && isPersonalized && (
                                         <span className="ml-auto text-[9px] font-semibold text-[#D3A15C] bg-[#D3A15C]/10 px-1.5 py-0.5 rounded-full shrink-0">
                                             Your area
                                         </span>
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
                         </Link>
